@@ -13,9 +13,11 @@ import { useState } from "react";
 import { API_URL } from "../config/constants";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
+import { useUser } from "../UserContext";
 
 function UploadPage() {
   const [imageUrl, setImageUrl] = useState(null);
+  const { user } = useUser();
   const history = useHistory();
   const onSubmit = (values) => {
     axios
@@ -73,13 +75,9 @@ function UploadPage() {
         <Form.Item
           label={<div className="upload-label">판매자 명</div>}
           name="seller"
-          rules={[{ required: true, message: "판매자 이름을 입력해주세요" }]}
+          initialValue={user ? user.name : ""}
         >
-          <Input
-            className="upload-name"
-            size="large"
-            placeholder="이름을 입력해주세요."
-          />
+          <Input className="upload-name" size="large" disabled />
         </Form.Item>
         <Divider />
         <Form.Item
